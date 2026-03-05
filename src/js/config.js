@@ -11,8 +11,8 @@ const CONFIG = {
     OPENAI_API: 'https://api.openai.com/v1/chat/completions',
 
     // OpenAI Settings
-    OPENAI_MODEL: 'gpt-4o-mini',
-    OPENAI_API_KEY: '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',
+    //OPENAI_MODEL: 'gpt-4o-mini',
+    // OPENAI_API_KEY: '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',
 
     // LocalStorage Keys
     STORAGE_PREFIX: 'habitTracker_',
