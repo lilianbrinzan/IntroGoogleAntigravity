@@ -131,42 +131,18 @@ const AIRecommendations = {
     /**
      * Call Vertex AI (Gemini) instead of OpenAI
      */
-    async callOpenAI(context) {
-        const prompt = this.buildPrompt(context);
+    async callGeminiCloud(context) {
+        // URL-ul funcției tale generat de Google după Deploy
+        const CLOUD_FUNCTION_URL = 'https://us-central1-sonic-platform-....cloudfunctions.net/getAiRecommendations';
 
-        // ATENȚIE: Înlocuiește cu datele proiectului tău
-        const PROJECT_ID = 'sonic-platform-468615-r1';
-        const LOCATION = 'us-central1';
-        const MODEL = 'gemini-1.5-flash'; // Sau 'gemini-1.5-pro'
-
-        const url = `https://${LOCATION}-aiplatform.googleapis.com/v1/projects/${PROJECT_ID}/locations/${LOCATION}/publishers/google/models/${MODEL}:generateContent`;
-
-        // Notă: În mediul browser, va trebui să obții un token de autentificare valid.
-        // Pentru teste rapide în Vertex AI Studio, ai deja interfața gata făcută.
-        const response = await fetch(url, {
+        const response = await fetch(CLOUD_FUNCTION_URL, {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer [AICI_TREBUIE_TOKEN-UL_TAU_GCLOUD]`
-            },
-            body: JSON.stringify({
-                contents: [{
-                    role: 'user',
-                    parts: [{ text: prompt }]
-                }],
-                generationConfig: {
-                    temperature: 0.7,
-                    maxOutputTokens: 500
-                }
-            })
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(context)
         });
 
-        if (!response.ok) {
-            throw new Error(`Eroare Vertex AI: ${response.status}`);
-        }
-
         const data = await response.json();
-        return data.candidates[0].content.parts[0].text;
+        return data.recommendations;
     },
 
     /**
