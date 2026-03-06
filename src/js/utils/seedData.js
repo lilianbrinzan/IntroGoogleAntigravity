@@ -10,3 +10,18 @@ export function initializeDemoData() {
         console.log("Date de test încărcate cu succes!");
     }
 }
+
+export function getDemoData() {
+    return [
+        { name: 'Cloud Architecture Design', progress: 90, category: 'Work' },
+        { name: 'Gemini API Integration', progress: 75, category: 'Dev' },
+        { name: 'Deployment on Cloud Run', progress: 50, category: 'Dev' },
+        { name: 'Antigravity Research', progress: 40, category: 'Research' }
+    ];
+}
+
+export function initDashboard() {
+    if (!localStorage.getItem('habits')) {
+        localStorage.setItem('habits', JSON.stringify(getDemoData()));
+    }
+}

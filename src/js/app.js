@@ -49,3 +49,10 @@ function bindGlobalEvents() {
         });
     });
 }
+
+import { initDashboard } from './utils/seedData.js';
+
+document.addEventListener('DOMContentLoaded', () => {
+    initDashboard();
+    // restul codului tău de inițializare
+});
