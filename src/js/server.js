@@ -7,6 +7,9 @@ const client = new SecretManagerServiceClient();
 const cors = require('cors');
 app.use(cors()); // Adaugă asta în server.js
 
+const PORT = process.env.PORT || 8080;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
 async function getApiKey() {
     const [version] = await client.accessSecretVersion({
         name: 'projects/YOUR_PROJECT_ID/secrets/OPENAI_API_KEY/versions/latest',
