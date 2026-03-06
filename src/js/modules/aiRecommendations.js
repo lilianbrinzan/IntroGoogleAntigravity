@@ -254,3 +254,30 @@ Pe baza acestor date, oferă 3-4 recomandări personale pentru creșterea produc
 
 // Make globally available
 window.AIRecommendations = AIRecommendations;
+
+// js/modules/aiRecommendations.js
+
+export async function fetchAIRecommendations(userHabits) {
+    // URL-ul backend-ului tău (în producție va fi URL-ul de Cloud Run)
+    const backendUrl = 'https://antigravity-service-xyz.a.run.app/api/recommendations';
+
+    try {
+        const response = await fetch(backendUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ userHabits }),
+        });
+
+        if (!response.ok) {
+            throw new Error('Eroare la comunicarea cu serverul AI');
+        }
+
+        const result = await response.json();
+        return result.data; // Aici primim recomandarea procesată
+    } catch (error) {
+        console.error('Antigravity Service Error:', error);
+        return "Nu am putut obține recomandări în acest moment.";
+    }
+}
