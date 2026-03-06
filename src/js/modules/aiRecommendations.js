@@ -129,20 +129,30 @@ const AIRecommendations = {
     },
 
     /**
-     * Call Vertex AI (Gemini) instead of OpenAI
+      * Call our secure Cloud Function instead of direct API calls
      */
     async callGeminiCloud(context) {
-        // URL-ul funcției tale generat de Google după Deploy
-        const CLOUD_FUNCTION_URL = 'https://us-central1-sonic-platform-....cloudfunctions.net/getAiRecommendations';
+        const CLOUD_FUNCTION_URL = 'https://recomandari-gemini-174003836777.europe-west1.run.app';
 
-        const response = await fetch(CLOUD_FUNCTION_URL, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(context)
-        });
+        try {
+            const response = await fetch(CLOUD_FUNCTION_URL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(context)
+            });
 
-        const data = await response.json();
-        return data.recommendations;
+            if (!response.ok) {
+                throw new Error(`Eroare backend: ${response.status}`);
+            }
+
+            // Gemini returnează textul direct
+            return await response.text();
+        } catch (error) {
+            console.error('Eroare la apelul Gemini Cloud:', error);
+            throw error;
+        }
     },
 
     /**
