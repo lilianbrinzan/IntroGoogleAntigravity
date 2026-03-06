@@ -4,6 +4,8 @@ const app = express();
 app.use(express.json());
 
 const client = new SecretManagerServiceClient();
+const cors = require('cors');
+app.use(cors()); // Adaugă asta în server.js
 
 async function getApiKey() {
     const [version] = await client.accessSecretVersion({

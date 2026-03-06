@@ -1,0 +1,37 @@
+{
+    "name": "introgoogleantigravity",
+    "version": "1.0.0",
+    "description": "Habit Tracker & Productivity Dashboard with AI recommendations",
+    "main": "src/app.js",
+    "scripts": {
+        "start": "npx serve .",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "keywords": [
+        "habit-tracker",
+        "productivity",
+        "ai",
+        "dashboard"
+    ],
+    "author": "",
+    "license": "ISC"
+}
+
+{
+    "name": "antigravity-backend",
+    "version": "1.0.0",
+    "description": "Backend pentru recomandări AI securizate",
+    "main": "server.js",
+    "scripts": {
+        "start": "node server.js"
+    },
+    "dependencies": {
+        "express": "^4.21.0",
+        "@google-cloud/secret-manager": "^6.0.0",
+        "openai": "^4.0.0",
+        "cors": "^2.8.5"
+    },
+    "engines": {
+        "node": "18.x"
+    }
+}
