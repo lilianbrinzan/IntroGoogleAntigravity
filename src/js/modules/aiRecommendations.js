@@ -11,12 +11,20 @@ const AIRecommendations = {
      * Initialize AI module
      */
     init() {
-        this.container = $('#aiRecommendations');
-        this.button = $('#generateRecommendations');
-        this.greetingButton = $('#getAiAdvice');
+        console.log("AI Module inițializat!");
+        this.container = document.getElementById('aiRecommendations');
+        this.button = document.getElementById('generateRecommendations');
 
-        this.bindEvents();
-        this.loadCachedRecommendations();
+        // Legăm evenimentul imediat
+        if (this.button) {
+            console.log("Butonul a fost găsit, atașez evenimentul...");
+            this.button.addEventListener('click', () => {
+                console.log("CLICK detectat pe buton!");
+                this.generateRecommendations();
+            });
+        } else {
+            console.error("Butonul NU a fost găsit în HTML!");
+        }
     },
 
     /**
@@ -55,7 +63,7 @@ const AIRecommendations = {
      */
     async generateRecommendations() {
         // 1. Verificăm dacă măcar intră aici
-        console.log("DEBUG: Butonul a fost apăsat, încerc să inițiez apelul AI...");
+        console.log("Funcția generateRecommendations a fost apelată!");
 
         this.showLoading(); // Dacă nu vezi spinner-ul, aici e problema
 
