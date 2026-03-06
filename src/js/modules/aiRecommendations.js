@@ -54,19 +54,28 @@ const AIRecommendations = {
      * Generate AI recommendations
      */
     async generateRecommendations() {
-        this.showLoading();
+        // 1. Verificăm dacă măcar intră aici
+        console.log("DEBUG: Butonul a fost apăsat, încerc să inițiez apelul AI...");
+
+        this.showLoading(); // Dacă nu vezi spinner-ul, aici e problema
 
         try {
             const context = this.buildContext();
-            // AICI folosim noua funcție
-            const recommendations = await this.callGeminiCloud(context);
+            console.log("DEBUG: Contextul construit:", context);
 
-            this.displayRecommendations(recommendations);
-            this.cacheRecommendations(recommendations);
+            // 2. Apelul tău către funcție
+            const response = await fetch('https://recomandari-gemini-174003836777.europe-west1.run.app', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(context)
+            });
 
+            const data = await response.text();
+            console.log("DEBUG: Răspuns primit de la Cloud:", data);
+
+            this.displayRecommendations(data);
         } catch (error) {
-            console.error('AI Error:', error);
-            this.showError('Nu s-au putut obține recomandări. Încercați mai târziu.');
+            console.error('DEBUG: Eroare critică la apel AI:', error);
         }
     },
 
