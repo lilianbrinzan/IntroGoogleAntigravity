@@ -54,16 +54,12 @@ const AIRecommendations = {
      * Generate AI recommendations
      */
     async generateRecommendations() {
-        if (!CONFIG.OPENAI_API_KEY || CONFIG.OPENAI_API_KEY === 'your_openai_api_key_here') {
-            this.showError('Cheia API OpenAI nu este configurată. Adăugați cheia în config.js');
-            return;
-        }
-
         this.showLoading();
 
         try {
             const context = this.buildContext();
-            const recommendations = await this.callOpenAI(context);
+            // AICI folosim noua funcție
+            const recommendations = await this.callGeminiCloud(context);
 
             this.displayRecommendations(recommendations);
             this.cacheRecommendations(recommendations);
